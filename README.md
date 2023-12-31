@@ -31,7 +31,9 @@ For a list of available **Gofig** specific settings see the [section placeholder
 
 After defining your config you can run `$ gofig <conf-name> or alias`
 
-##### Config options
+##### Config Objects
+- 
+
 
 - type: is either terminal, tmux, go (new go project from template)
 
@@ -41,12 +43,16 @@ which environment to run tmux in (remote or local). Default is remote
 **Warning:** If you're using tmux locally instead of on the remote server
 you will need a ssh connection for each window/pane/session. 
 
-##### Example config
+##### Example Config
+
 {
-    "type": "development",
+    "type": "tmux",
     "name": "personal",
     "description": "Default personal development environment with my standard sessions for notes, 
     and work",
+    "sessions": [
+        {
+    ],
 
 }
 
