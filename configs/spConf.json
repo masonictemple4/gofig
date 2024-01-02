@@ -1,0 +1,48 @@
+{
+  "type": "tmux",
+  "name": "cli",
+  "alias": "c",
+  "description": "go cli tool for tmux sessions",
+  "tmux": {
+    "execution_env": "remote",
+    "host": {
+      "host": "mason-pi",
+      "user": "mason",
+      "interactive_mode": true,
+      "accept_host": true
+    },
+    "sessions": [
+      {
+        "pos": 0,
+        "id": "gofig"
+        "layout": "singlepane"
+        "windows": [
+          {
+            "pos": 0,
+            "id": "gofig",
+            "panes": [],
+            "startcommands": [
+              "cd ~/personal/gofig"
+            ]
+          }
+        ]
+      },
+      {
+        "pos": 1,
+        "id": "gpt",
+        "layout": "singlepane"
+        "windows": [
+          {
+            "pos": 0,
+            "id": "gopenai",
+            "panes": [],
+            "startcommands": [
+              "cd ~/personal/go-openai"
+            ]
+          }
+        ]
+      }
+    ],
+    "layout": "singlepane"
+  }
+}

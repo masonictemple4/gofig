@@ -20,19 +20,8 @@ to search for configs.
 Configs can be identified by their name or an alias you define. By default the Name is used, however if there is ever
 a need to abbreviate/alias a config's name you can use the command to set it. 
 
-**Note: Your config aliases live on your local device, you can use the `$ gofig export db` helper to 
-generate a copy of your custom gofig settings.`
-
-Although now that I'm thinking about it, it would be smart to add a shared gofig config file that can
-be read from a centralized repository so that your aliases and other settings are consistent on all devices.
-Like a control node in Ansible.
-
-For a list of available **Gofig** specific settings see the [section placeholder here]().
-
-After defining your config you can run `$ gofig <conf-name> or alias`
-
 ##### Config Objects
-- 
+- layout
 
 
 - type: is either terminal, tmux, go (new go project from template)
@@ -47,7 +36,8 @@ you will need a ssh connection for each window/pane/session.
 
 {
     "type": "tmux",
-    "name": "personal",
+    "name": "default",
+    "alias": "d"
     "description": "Default personal development environment with my standard sessions for notes, 
     and work",
     "sessions": [
@@ -56,3 +46,29 @@ you will need a ssh connection for each window/pane/session.
 
 }
 
+##### Layouts
+- singlepane: Default layout. No splits.
+- singlehsplit: 2 horizontal rows in a single window.
+- singlevsplit: 2 vertical colums in a single window.
+- quadrant: 2x2 grid in a single window.
+- quadhsplit: 4 horizontal rows inside a single window.
+- quadvsplit: 4 veritical columns inside of a single window.
+
+
+Layouts are temporarily limited to the basic setups listed above.
+These should cover most common use cases, for more complex layouts
+you can either manually configure your session or use one of the following
+workarounds:
+
+ - You can write setup script(s) to run as a startcommand at either the session, window,
+   or window pane level.
+
+ - You can also specify [tmux cli](https://github.com/tmux/tmux/wiki/Getting-Started) commands to run as well.
+
+ - Or if you want to make things difficult you can define your session(s), session window(s),
+   and window pane(s) sequentially in your **gofig** json or yaml files. The order in
+   which you do things will matter as it would when manually configuring your layout
+   with keybindings. 
+
+A much more fitting solution is on the way, so even the most heinous layouts
+can be defined with ease.

@@ -5,8 +5,8 @@
 
 package main
 
-import "fmt"
+import "github.com/masonictemple4/gofig/cmd"
 
 func main() {
-	fmt.Println("vim-go")
+	cmd.Execute()
 }
