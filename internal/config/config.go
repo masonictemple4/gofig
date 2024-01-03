@@ -13,17 +13,12 @@ const GONEW_DEFAULT_VERSION = "latest"
 
 const (
 	ConfigTypeTmux = "tmux"
-	ConfigTypeTerm = "terminal"
 	ConfigTypeGo   = "go"
 )
 
 func IsConfigType(configType string) bool {
 	switch configType {
-	case ConfigTypeTmux:
-		return true
-	case ConfigTypeTerm:
-		return true
-	case ConfigTypeGo:
+	case ConfigTypeTmux, ConfigTypeGo:
 		return true
 	}
 	return false
@@ -44,8 +39,7 @@ func IsConfigType(configType string) bool {
 //	tab and connect to a remote instance. Where you can
 //	decide to either use tmux or not.
 type Config struct {
-	// Confuration type
-	// Defined above.
+	// Confuration type defined above.
 	Type string `json:"type" yaml:"type"`
 	// Full configuratiion name.
 	Name string `json:"name" yaml:"name"`
@@ -54,13 +48,11 @@ type Config struct {
 	Alias string `json:"alias" yaml:"alias"`
 	// A description for the configuration.
 	Description string `json:"description" yaml:"description"`
+	// Project path - this is the path to the project.
+	ProjectPath string `json:"project_path" yaml:"project_path"`
 	// Tmux settings for this environment.
-	Tmux TmuxConfig `json:"tmux" yaml:"tmux"`
-	// Can be used as an alternative to a tmux instance, or to manage different host environments
-	// if require more than one host.
-	// You can leave this empty to use a single tab terminal instance.
-	TermTabs  []TermTab `json:"term_tabs" yaml:"term_tabs"`
-	GoProject GoConfig  `json:"go_project" yaml:"go_project"`
+	Tmux      TmuxConfig `json:"tmux" yaml:"tmux"`
+	GoProject GoConfig   `json:"go_project" yaml:"go_project"`
 }
 
 func New(path string) *Config {
@@ -172,21 +164,7 @@ type TmuxWindowPane struct {
 	StartCommands []string `json:"start_commands" yaml:"start_commands"`
 }
 
-// TermTab represents the configuration settings for each tab.
-type TermTab struct {
-	// Pos is the tabs position (ie. 0, 1, 2, etc.)
-	// This is in case they are ever out of order.
-	Pos int64 `json:"pos" yaml:"pos"`
-	// This can be a name or unique identifier to identify the tab.
-	Id string `json:"id" yaml:"id"`
-	// StartCommands are a list of commands to execute in order
-	// when the tab is opened.
-	StartCommands []string `json:"start_commands" yaml:"start_commands"`
-	// Defaults to local but you can also specify a remote host
-	// for each tab if you'd like.
-	Host HostConfig `json:"host" yaml:"host"`
-}
-
+// Configuration for go projects.
 type GoConfig struct {
 	// Full path to the root dir.
 	Path string `json:"path" yaml:"path"`

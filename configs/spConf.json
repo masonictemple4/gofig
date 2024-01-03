@@ -9,7 +9,6 @@
       "host": "mason-pi",
       "user": "mason",
       "interactive_mode": true,
-      "accept_host": true
     },
     "sessions": [
       {

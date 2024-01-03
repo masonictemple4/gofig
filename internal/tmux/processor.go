@@ -1,3 +1,4 @@
+// TODO: This is not the place to do this.
 package tmux
 
 import (

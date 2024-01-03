@@ -5,6 +5,10 @@ I've had to resetart my terminal or kill my tmux server one too many times after
 in order to apply changes or updates. Annoyed after having to set everything up by hand again, I want something
 I can use to spin up with just a command.
 
+#### TODOS:
+Simplfiy instead of using this to start the ssh session etc.. just use it on the remote server.
+Limit scope to tmux related environments.
+
 
 Gofig also wraps the new dev tool `gonew` to generage new go projects from local or remote templates.
 
