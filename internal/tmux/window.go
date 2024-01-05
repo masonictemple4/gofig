@@ -1,10 +1,11 @@
 package tmux
 
 import (
+	"fmt"
 	"strconv"
 )
 
-const WINDOW_FORMAT = "#{window_id}|#{window_name}|#{window_index}|#{window_height}|#{window_width}|#{window_offset_x}|#{window_offset_y}|#{window_layout}"
+const WINDOW_FORMAT = "#{window_id}|#{window_name}|#{window_index}|#{window_height}|#{window_width}|#{window_offset_x}|#{window_offset_y}|#{window_layout}|#{current_pane_path}"
 
 type WindowField int
 
@@ -17,6 +18,7 @@ const (
 	WindowOffsetX
 	WindowOffsetY
 	WindowLayout
+	WindowCurrentPanePath
 )
 
 // Move the window related functions and models here.
@@ -51,7 +53,9 @@ func WindowsFromString(input string) *[]Window {
 	windowStrs := splitLines(input)
 
 	for _, windowStr := range windowStrs {
-		windows = append(windows, windowFromString(windowStr))
+		window := windowFromString(windowStr)
+		window.Panes = window.GetPanes()
+		windows = append(windows, window)
 	}
 
 	return &windows
@@ -72,13 +76,33 @@ func windowFromString(input string) Window {
 	yoff, _ := strconv.ParseInt(fields[WindowOffsetY], 10, 64)
 
 	return Window{
-		Id:     wid,
-		Index:  index,
-		Height: height,
-		Width:  width,
-		Xoff:   xoff,
-		Yoff:   yoff,
-		Name:   fields[WindowName],
-		Layout: fields[WindowLayout],
+		Id:      wid,
+		Index:   index,
+		Height:  height,
+		Width:   width,
+		Xoff:    xoff,
+		Yoff:    yoff,
+		Name:    fields[WindowName],
+		Layout:  fields[WindowLayout],
+		WorkDir: fields[WindowCurrentPanePath],
 	}
+}
+
+func (w *Window) GetPanes() []Pane {
+
+	args := []string{
+		"list-panes",
+		"-a",
+		"-F",
+		PANE_FORMAT,
+		"-f",
+		fmt.Sprintf("#{m:%s,#{window_name}}", w.Name),
+	}
+
+	output, err := Exec(args)
+	if err != nil {
+		panic(err)
+	}
+
+	return *PanesFromString(output)
 }

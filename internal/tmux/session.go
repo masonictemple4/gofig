@@ -126,3 +126,16 @@ func (s *Session) GetWindows() []Window {
 
 	return *windows
 }
+
+func Attach(sessionName string) {
+	args := []string{
+		"switch-client",
+		"-t",
+		sessionName,
+	}
+
+	_, err := Exec(args)
+	if err != nil {
+		panic(err)
+	}
+}

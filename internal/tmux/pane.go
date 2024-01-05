@@ -4,7 +4,7 @@ import "strconv"
 
 type PaneField int
 
-const PANE_FORMAT = "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_start_path}|#{pane_layout}"
+const PANE_FORMAT = "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_current_path}|#{pane_layout}"
 
 const (
 	PaneId PaneField = iota
@@ -12,7 +12,7 @@ const (
 	PaneTitle
 	PaneHeight
 	PaneWidth
-	PaneStartPath
+	PaneCurrentPath
 	PaneLayout
 )
 
@@ -27,7 +27,7 @@ type Pane struct {
 	Height int64 `json:"height" yaml:"height"`
 	// pane_width
 	Width int64 `json:"width" yaml:"width"`
-	// pane_start_path: When creating with this value
+	// pane_current_path: When creating with this value
 	// or
 	// pane_path: When reading this value/setting it.
 	WorkdDir string `json:"work_dir" yaml:"work_dir"`
@@ -64,6 +64,6 @@ func paneFromString(input string) Pane {
 		Height:   height,
 		Width:    width,
 		Title:    paneParts[PaneTitle],
-		WorkdDir: paneParts[PaneStartPath],
+		WorkdDir: paneParts[PaneCurrentPath],
 	}
 }
