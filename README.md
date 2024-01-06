@@ -22,3 +22,4 @@ To load your config, make sure tmux is not open:
 - [ ] Add an overall project config to house the tmux sessions as children so we can do it by project.
 - [ ] Round out tests.
 - [ ] Overall error handling..
+- [ ] Make sure to allow loading new sessions from within tmux.
