@@ -1,6 +1,9 @@
 package tmux
 
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
 type PaneField int
 
@@ -48,9 +51,11 @@ func PanesFromString(input string) *[]Pane {
 
 func paneFromString(input string) Pane {
 
+	println("Pane input: " + input)
 	paneParts := splitFields(input)
 
 	// Skip leading character in the pane id.
+	fmt.Printf("Pane parts: %v\n", paneParts)
 	paneParts[PaneId] = paneParts[PaneId][1:]
 
 	pid, _ := strconv.ParseInt(paneParts[PaneId], 10, 64)
