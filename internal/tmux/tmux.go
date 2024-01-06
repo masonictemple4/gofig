@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
@@ -180,4 +181,41 @@ func LoadLayout(filename string) {
 	if err := ExecAndReplace(args); err != nil {
 		panic(err)
 	}
+}
+
+// Will remove the local layout file
+func DeleteLayout(filename string) error {
+	outPath := getOutputPath(filename)
+
+	if err := os.Remove(outPath); err != nil {
+		return err
+	}
+
+	println("Successfully removed " + outPath)
+
+	return nil
+
+}
+
+func ListLayouts() error {
+	layoutDir := getOutputPath("")
+
+	ls, err := exec.LookPath("ls")
+	if err != nil {
+		return err
+	}
+
+	args := []string{
+		"-al",
+		layoutDir,
+	}
+
+	output, err := exec.Command(ls, args...).Output()
+	if err != nil {
+		return err
+	}
+
+	println(string(output))
+
+	return nil
 }
