@@ -9,3 +9,4 @@ Gofig is a CLI tool built with go to quickly manage tmux sessions, and session c
 - [ ] Refactor the Load layout function in tmux.
 - [ ] Add an overall project config to house the tmux sessions as children so we can do it by project.
 - [ ] Round out tests.
+- [ ] Overall error handling..
