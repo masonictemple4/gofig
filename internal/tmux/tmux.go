@@ -77,7 +77,7 @@ func ExportLayout(filename string) error {
 		}
 	}
 
-	println("Exported layout to layout." + outFileName)
+	println("Exported layout to " + outFileName)
 
 	return nil
 }
