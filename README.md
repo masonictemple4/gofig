@@ -24,5 +24,6 @@ To load your config, make sure tmux is not open:
 - [ ] Overall error handling..
 - [ ] Make sure to allow loading new sessions from within tmux.
 - [ ] Fix bug with same named panes.
+    - If naming windows the same thing across sessions.
 - [ ] Fix bug with split panes.
 - [ ] Add better start command support for panes and windows.
