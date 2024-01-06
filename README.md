@@ -12,6 +12,10 @@ With your tmux session open run the following:
 
 `$ gofig export layoutname.json` (you can also use .yaml)
 
+To load your config, make sure tmux is not open:
+
+`$ gofig load layoutname.yaml`
+
 ### TODOs
 - [ ] Still a little finicky with layout, need to test and fix that on both single and mutlipae windows..
 - [ ] Refactor the Load layout function in tmux.
