@@ -23,3 +23,5 @@ To load your config, make sure tmux is not open:
 - [ ] Round out tests.
 - [ ] Overall error handling..
 - [ ] Make sure to allow loading new sessions from within tmux.
+- [ ] Fix bug with same named panes.
+- [ ] Fix bug with split panes.
