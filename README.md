@@ -4,6 +4,9 @@ Gofig is a CLI tool built with go to quickly manage tmux sessions, and session c
 
 [CLI Docs](./docs/gofig.md)
 
+### Installtion
+`$ go install github.com/masonictemple4/gofig@latest`
+
 ### TODOs
 - [ ] Still a little finicky with layout, need to test and fix that on both single and mutlipae windows..
 - [ ] Refactor the Load layout function in tmux.
