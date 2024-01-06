@@ -4,9 +4,13 @@ import "testing"
 
 func TestExportLayout(t *testing.T) {
 
-	ExportLayout(FormatYAML)
+	if err := ExportLayout(FormatYAML); err != nil {
+		t.Error(err)
+	}
 
-	ExportLayout(FormatJSON)
+	if err := ExportLayout(FormatJSON); err != nil {
+		t.Error(err)
+	}
 
 }
 
