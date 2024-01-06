@@ -175,7 +175,7 @@ func LoadLayout(filename string) {
 	args := []string{
 		"attach-session",
 		"-t",
-		sessions[0].Name,
+		fmt.Sprintf("%s:0", sessions[0].Name),
 	}
 
 	if err := ExecAndReplace(args); err != nil {
