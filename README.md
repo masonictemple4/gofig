@@ -28,3 +28,35 @@ To load your config, make sure tmux is not open:
 - [ ] Fix bug with split panes.
 - [ ] Add better start command support for panes and windows.
 - [ ] Honestly redo the generation of the objects from the existing tmux session.
+
+
+### Scratch notes:
+
+To start let's walk through the existing process from start to finish..
+1. `$ tmux list-sessions -F "#{session_id}|#{session_name}|#{session_path}" (might need to add -p when running manually)
+    This process will return a list of the sessions on the current running tmux server.
+    Then removes trailing newline character, and split into lines each representing a session.
+    Iterate over the sessionStrings and call the `sessionFromString()` function.
+
+    Immediately after generating the base session object, we set the session.Windows by calling `session.GetWindows()`
+    Which leads us to our second command.
+
+2.  `$ tmux list-windows -t sessionName -F "#{window_id}|#{window_name}|#{window_index}|#{window_height}|#{window_width}|#{window_offset_x}|#{window_offset_y}|#{window_layout}|#{current_pane_path}"`
+    This process will return a list of the windows for the target session.
+    Removes the trailing newline character, and splits into lines each representing a window in that session.
+    Iterate over the windowStrings and call the `windowFromString()` function.
+    (NOTE: This is all happening before we reach the `sessions = append(sesssions, session)` line in the previous step.
+    
+    Immediately after generating the base window object, we set the window.Panes by calling `window.GetPanes()`.
+    Which leads us to the last command.
+
+3. `$ tmux list-panes -a -F "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_current_path}|#{pane_layout}" -f "#{m:window.Name,#{window_name}}"`
+    This is potentially problematic, filtering on window name isn't enough because there can be more than 1 window with the
+    same name, there can also be windows in other sessions with the same name.
+
+    After calling this command it returns the `PanesFromString()` function output Which is just a slice of panes.
+
+
+
+Once the final command to `list-panes` completes technically, we should then resume the `ListSessions()` process,
+appending the now "complete" session to the list of sessions and moving onto the next iteration.
