@@ -31,3 +31,10 @@ To load your config, make sure tmux is not open:
 - [ ] See if we can make the default window the first for all sessions, previously
 solved by calling the attach-session command with the window id. However, 
 the following sessions are all currently attached to their last window.
+- [ ] Add update functionality, currently if you export a layout to an existing path that
+exists you will replace that file.
+    - [ ] At the very least add a safety check to confirm whether or not they would like to
+    overwrite that file.
+    - [ ] Add an update feature to take current export and apply changes to existing layout
+    file. (Not sure if this is totally necessary, one could just load their existing layout 
+    and if they make additions they would like to save for next time just re-export it.)
