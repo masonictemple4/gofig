@@ -92,7 +92,7 @@ func (w *Window) GetPanes() []Pane {
 		"-F",
 		PANE_FORMAT,
 		"-f",
-		fmt.Sprintf("#{m:%s,#{window_name}}", w.Name),
+		fmt.Sprintf("#{m:%s,#{window_id}}", w.Id),
 	}
 
 	output, err := Exec(args)
