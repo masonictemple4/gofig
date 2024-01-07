@@ -86,3 +86,7 @@ Once the final command to `list-panes` completes technically, we should then res
 appending the now "complete" session to the list of sessions and moving onto the next iteration.
 
 
+After switching from int ids to strings and updating the `list-panes` filter string the export output is correct.
+
+Next, let's see if we can actually load the format now.
+
