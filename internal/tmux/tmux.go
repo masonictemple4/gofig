@@ -68,7 +68,14 @@ func ExportLayout(filename string) error {
 
 	switch format {
 	case FormatJSON:
-		if err := json.NewEncoder(outFile).Encode(sessions); err != nil {
+		// Pretty format the json.
+		data, err := json.MarshalIndent(sessions, "", "  ")
+		if err != nil {
+			return err
+		}
+
+		_, err = outFile.Write(data)
+		if err != nil {
 			return err
 		}
 	case FormatYAML:
