@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -90,7 +91,7 @@ func ExportLayout(filename string) error {
 }
 
 // Loads a new tmux server with the layout.
-func LoadLayout(filename string) {
+func LoadLayout(filename string, verbose bool) {
 	// Use the execandreplace command here
 	inFmt := filepath.Ext(filename)[1:]
 
@@ -131,7 +132,8 @@ func LoadLayout(filename string) {
 			mainWindow.Panes[0].WorkdDir,
 		}
 
-		// TODO: Figure out what to do with out here.
+		// TODO: See if we can better error handle if we
+		// set and parse out
 		_, err := Exec(args)
 		if err != nil {
 			panic(err)
@@ -146,10 +148,14 @@ func LoadLayout(filename string) {
 					"-k",
 					"-n",
 					w.Name,
-					"-t",
-					w.Id,
 					"-c",
 					startDir,
+				}
+
+				if verbose {
+					cmdStr := fmt.Sprintf("tmux %s", strings.Join(args, " "))
+
+					println("The new window command is: " + cmdStr)
 				}
 
 				_, err := Exec(args)

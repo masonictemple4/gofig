@@ -32,6 +32,7 @@ To load your config, make sure tmux is not open:
 
 ### Scratch notes:
 
+##### Export Process
 To start let's walk through the existing process from start to finish..
 1. `$ tmux list-sessions -F "#{session_id}|#{session_name}|#{session_path}"` (might need to add -p when running manually)
 
@@ -90,7 +91,60 @@ After switching from int ids to strings and updating the `list-panes` filter str
 
 Next, let's see if we can actually load the format now.
 
- > Panic on tmux.go:157
+##### Load Process
+To start let's walk through the existing process from start to finish..
+1. `$ tmux new-session -d -n mainWindowName -D -s sessionName -c mainWindow.Panes[0].WorkDir` (replace pseudo names with actual values)
 
-It appears the loop for panes is executing when it shouldn't. Verified that the `debug.json` layout file 
-does not have any window objects that have more than 1 pane.
+    This kicks off the session and the first window within the session known as `mainWindow`.
+
+    We ignore the output of this command execution and go straight into our window loop if there are no errors.
+    
+    Upon entering our window loop we skip the first window because it was setup with the session. However,
+    it might make sense to refine this such that if the first window has multiple panes we go ahead and
+    configure those.
+
+
+    If there is more than one window, the next command is executed on the next iteration.
+
+2.  `$ tmux new-window -k -n window.Name -c window.Panes[0].WorkDir`
+
+    
+    > Previous we experienced some issues with the new-window commands after the first
+    session completed. This was an issue with the target-window flag `-t`. It was
+    unable to find that window because it did not exist. Removing it solved our issues.
+
+    This will create our new window inside of the session.
+
+    Much like our previous command, we ignore the output here.
+
+    Next we check if there are additional panes for us to setup.
+
+    If so we enter our panes loop, however we are currently starting from 0,
+    and might want to skip the initial pane.. # TODO: test to confirm.
+
+    
+    This leads us to our final command
+    
+3. `$ tmux split-window -t window.Id -c window.Panes[pid].WorkDir`
+    
+    This command will split the current window for the new pane.
+
+    As with the previous commands we ignore the output here and panic if there
+    are any issues.
+
+    We continue to repeat this step for each pane.
+
+
+    **TODO: After we exit our pane loop but inside of the window loop we should do a check for layout,
+    and select the layout to format the panes??? Or something like that***
+
+    After we've completed the outer loops we are ready for our final command.
+    
+4. `tmux attach-session -t sessions[0].Name:0` (we execute this with a syscall to replace our `gofig` process with tmux)
+
+    This command will attach our terminal to the first session's first window. Otherwise it returns
+    an error and the `gofig` process will exit.
+
+
+ 
+
