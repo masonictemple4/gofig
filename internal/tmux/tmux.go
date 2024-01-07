@@ -165,7 +165,9 @@ func LoadLayout(filename string, verbose bool) {
 			}
 
 			if len(w.Panes) > 1 {
-				for pid := range w.Panes {
+				// Skip the first because we already have it.
+				// Otherwise we'll end up with an off by one error.
+				for pid := range w.Panes[1:] {
 					args := []string{
 						"split-window",
 						"-t",
