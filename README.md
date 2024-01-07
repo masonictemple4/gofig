@@ -50,10 +50,16 @@ To start let's walk through the existing process from start to finish..
 2.  `$ tmux list-windows -t sessionName -F "#{window_id}|#{window_name}|#{window_index}|#{window_height}|#{window_width}|#{window_offset_x}|#{window_offset_y}|#{window_layout}|#{current_pane_path}"`
 
     ```zsh
+    // gofig session
     @0|gofig|0|67|134|||cd3d,134x67,0,0,0|
     @1|build|1|67|134|||cd3e,134x67,0,0,1|
     @2|env|2|67|139|||cfbf,139x67,0,0,2|
     @3|layouts|3|67|139|||cfc0,139x67,0,0,3|
+
+    // kbd session
+    @8|keymap|0|67|139|||cfc5,139x67,0,0,8|
+    @9|build|1|67|139|||cfc6,139x67,0,0,9|
+    @10|config|2|67|139|||680f,139x67,0,0,10|
     ```
 
     This process will return a list of the windows for the target session.
@@ -66,11 +72,12 @@ To start let's walk through the existing process from start to finish..
 
 3. `$ tmux list-panes -a -F "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_current_path}|#{pane_layout}" -f "#{m:window.Name,#{window_name}}"`
 
+    > The output from here will largely depend on the 
+
     This is potentially problematic, filtering on window name isn't enough because there can be more than 1 window with the
     same name, there can also be windows in other sessions with the same name.
 
     After calling this command it returns the `PanesFromString()` function output Which is just a slice of panes.
-
 
 
 Once the final command to `list-panes` completes technically, we should then resume the `ListSessions()` process,
