@@ -35,6 +35,11 @@ To load your config, make sure tmux is not open:
 To start let's walk through the existing process from start to finish..
 1. `$ tmux list-sessions -F "#{session_id}|#{session_name}|#{session_path}"` (might need to add -p when running manually)
 
+    ```zsh
+    $0|gofig|/home/mason
+    $3|kbd|/home/mason
+    ```
+
     This process will return a list of the sessions on the current running tmux server.
     Then removes trailing newline character, and split into lines each representing a session.
     Iterate over the sessionStrings and call the `sessionFromString()` function.
