@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -91,7 +90,7 @@ func ExportLayout(filename string) error {
 }
 
 // Loads a new tmux server with the layout.
-func LoadLayout(filename string, verbose bool) {
+func LoadLayout(filename string) {
 	// Use the execandreplace command here
 	inFmt := filepath.Ext(filename)[1:]
 
@@ -152,11 +151,12 @@ func LoadLayout(filename string, verbose bool) {
 					startDir,
 				}
 
-				if verbose {
-					cmdStr := fmt.Sprintf("tmux %s", strings.Join(args, " "))
-
-					println("The new window command is: " + cmdStr)
-				}
+				// TODO: Uncomment or move once verbose mode is implemented.
+				// 				if verbose {
+				// 					cmdStr := fmt.Sprintf("tmux %s", strings.Join(args, " "))
+				//
+				// 					println("The new window command is: " + cmdStr)
+				// 				}
 
 				_, err := Exec(args)
 				if err != nil {
