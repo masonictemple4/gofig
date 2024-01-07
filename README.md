@@ -18,7 +18,6 @@ To load your config, make sure tmux is not open:
 
 ### TODOs
 - [ ] Still a little finicky with layout, need to test and fix that on both single and mutlipae windows..
-- [ ] Refactor the Load layout function in tmux.
 - [ ] Add an overall project config to house the tmux sessions as children so we can do it by project.
 - [ ] Round out tests.
 - [ ] Overall error handling..
@@ -29,3 +28,6 @@ To load your config, make sure tmux is not open:
 - [X] Add better start command support for panes and windows.
 - [X] Honestly redo the generation of the objects from the existing tmux session.
 - [ ] Implement a better verbosity mode.
+- [ ] See if we can make the default window the first for all sessions, previously
+solved by calling the attach-session command with the window id. However, 
+the following sessions are all currently attached to their last window.
