@@ -140,7 +140,7 @@ func LoadLayout(filename string) {
 					"-n",
 					w.Name,
 					"-t",
-					fmt.Sprintf("%d", w.Id),
+					w.Id,
 					"-c",
 					startDir,
 				}
@@ -157,7 +157,7 @@ func LoadLayout(filename string) {
 					args := []string{
 						"split-window",
 						"-t",
-						fmt.Sprintf("%d", w.Id),
+						w.Id,
 						"-c",
 						w.Panes[pid].WorkdDir,
 					}

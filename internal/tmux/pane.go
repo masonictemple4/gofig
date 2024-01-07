@@ -1,7 +1,6 @@
 package tmux
 
 import (
-	"fmt"
 	"strconv"
 )
 
@@ -21,7 +20,8 @@ const (
 
 type Pane struct {
 	// pane_id
-	Id int64 `json:"id" yaml:"id"`
+	// Requires leading character for future commands and filtering.
+	Id string `json:"id" yaml:"id"`
 	// pane_index
 	Index int64 `json:"index" yaml:"index"`
 	// pane_title
@@ -51,20 +51,14 @@ func PanesFromString(input string) *[]Pane {
 
 func paneFromString(input string) Pane {
 
-	println("Pane input: " + input)
 	paneParts := splitFields(input)
 
-	// Skip leading character in the pane id.
-	fmt.Printf("Pane parts: %v\n", paneParts)
-	paneParts[PaneId] = paneParts[PaneId][1:]
-
-	pid, _ := strconv.ParseInt(paneParts[PaneId], 10, 64)
 	pIndex, _ := strconv.ParseInt(paneParts[PaneIndex], 10, 64)
 	height, _ := strconv.ParseInt(paneParts[PaneHeight], 10, 64)
 	width, _ := strconv.ParseInt(paneParts[PaneWidth], 10, 64)
 
 	return Pane{
-		Id:       pid,
+		Id:       paneParts[PaneId],
 		Index:    pIndex,
 		Height:   height,
 		Width:    width,

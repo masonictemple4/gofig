@@ -25,8 +25,9 @@ const (
 type Window struct {
 	// window_name
 	Name string `json:"name" yaml:"name"`
-	// window_id
-	Id int64 `json:"id" yaml:"id"`
+	// window_index
+	// Requires leading character for future commands and filtering.
+	Id string `json:"id" yaml:"id"`
 	// window_index
 	Index int64 `json:"index" yaml:"index"`
 	// window_height
@@ -64,11 +65,6 @@ func WindowsFromString(input string) *[]Window {
 func windowFromString(input string) Window {
 	fields := splitFields(input)
 
-	// Skip the first character of the
-	// window id.
-	fields[WindowId] = fields[WindowId][1:]
-
-	wid, _ := strconv.ParseInt(fields[WindowId], 10, 64)
 	index, _ := strconv.ParseInt(fields[WindowIndex], 10, 64)
 	height, _ := strconv.ParseInt(fields[WindowHeight], 10, 64)
 	width, _ := strconv.ParseInt(fields[WindowWidth], 10, 64)
@@ -76,7 +72,7 @@ func windowFromString(input string) Window {
 	yoff, _ := strconv.ParseInt(fields[WindowOffsetY], 10, 64)
 
 	return Window{
-		Id:      wid,
+		Id:      fields[WindowId],
 		Index:   index,
 		Height:  height,
 		Width:   width,

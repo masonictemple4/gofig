@@ -2,7 +2,6 @@ package tmux
 
 import (
 	"fmt"
-	"strconv"
 )
 
 const SESSION_FORMAT = "#{session_id}|#{session_name}|#{session_path}"
@@ -17,7 +16,8 @@ const (
 
 type Session struct {
 	// session_id
-	Id int64 `json:"id" yaml:"id"`
+	// Requires leading character for future commands and filtering.
+	Id string `json:"id" yaml:"id"`
 	// session_name
 	Name string `json:"name" yaml:"name"`
 	// this will be the default path every new window opens in.
@@ -62,13 +62,8 @@ func SessionsFromString(input string) *[]Session {
 func sessionFromString(input string) Session {
 	fields := splitFields(input)
 
-	// Remove the first character from the session id.
-	fields[SessionId] = fields[SessionId][1:]
-
-	sid, _ := strconv.ParseInt(fields[SessionId], 10, 64)
-
 	return Session{
-		Id:      sid,
+		Id:      fields[SessionId],
 		Name:    fields[SessionName],
 		WorkDir: fields[SessionPath],
 	}
