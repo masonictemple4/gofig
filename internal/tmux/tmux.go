@@ -158,9 +158,8 @@ func LoadLayout(filename string) {
 				}
 			}
 
-			for pid := range w.Panes {
-				if pid > 0 {
-
+			if len(w.Panes) > 1 {
+				for pid := range w.Panes {
 					args := []string{
 						"split-window",
 						"-t",

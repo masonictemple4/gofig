@@ -90,3 +90,7 @@ After switching from int ids to strings and updating the `list-panes` filter str
 
 Next, let's see if we can actually load the format now.
 
+ > Panic on tmux.go:157
+
+It appears the loop for panes is executing when it shouldn't. Verified that the `debug.json` layout file 
+does not have any window objects that have more than 1 pane.
