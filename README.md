@@ -49,6 +49,13 @@ To start let's walk through the existing process from start to finish..
 
 2.  `$ tmux list-windows -t sessionName -F "#{window_id}|#{window_name}|#{window_index}|#{window_height}|#{window_width}|#{window_offset_x}|#{window_offset_y}|#{window_layout}|#{current_pane_path}"`
 
+    ```zsh
+    @0|gofig|0|67|134|||cd3d,134x67,0,0,0|
+    @1|build|1|67|134|||cd3e,134x67,0,0,1|
+    @2|env|2|67|139|||cfbf,139x67,0,0,2|
+    @3|layouts|3|67|139|||cfc0,139x67,0,0,3|
+    ```
+
     This process will return a list of the windows for the target session.
     Removes the trailing newline character, and splits into lines each representing a window in that session.
     Iterate over the windowStrings and call the `windowFromString()` function.
