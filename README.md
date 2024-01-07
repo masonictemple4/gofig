@@ -70,15 +70,19 @@ To start let's walk through the existing process from start to finish..
     Immediately after generating the base window object, we set the window.Panes by calling `window.GetPanes()`.
     Which leads us to the last command.
 
-3. `$ tmux list-panes -a -F "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_current_path}|#{pane_layout}" -f "#{m:window.Name,#{window_name}}"`
+3. `$ tmux list-panes -a -F "#{pane_id}|#{pane_index}|#{pane_title}|#{pane_height}|#{pane_width}|#{pane_current_path}|#{pane_layout}" -f "#{m:window.Id,#{window_id}}"`
 
-    > The output from here will largely depend on the 
+    > The output from here will largely depend on the current position of the window string iteration.
 
     This is potentially problematic, filtering on window name isn't enough because there can be more than 1 window with the
     same name, there can also be windows in other sessions with the same name.
 
     After calling this command it returns the `PanesFromString()` function output Which is just a slice of panes.
 
+    **Note: figured out that id's require the special leading character that we previously removed.
+    Need to go back through and undo that and set the id's to strings instead of ints.**
 
 Once the final command to `list-panes` completes technically, we should then resume the `ListSessions()` process,
 appending the now "complete" session to the list of sessions and moving onto the next iteration.
+
+
